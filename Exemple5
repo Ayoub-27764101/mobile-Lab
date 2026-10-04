@@ -1,0 +1,21 @@
+int red=13;
+int pbut=14;
+
+void setup() {
+pinMode(red,OUTPUT);
+pinMode(pbut,INPUT);
+
+}
+
+void loop() {
+if(digitalRead(pbut)==1){
+  digitalWrite(red,HIGH);
+  delay(3000);
+  
+}
+else{
+
+  digitalWrite(red,LOW);
+}
+
+};
