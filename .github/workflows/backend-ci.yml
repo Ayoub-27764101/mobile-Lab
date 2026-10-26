@@ -3,9 +3,19 @@ on:
   push:
     paths:
       - 'iot-academic-project/backend/**'
+      - '.github/workflows/backend-ci.yml'
   pull_request:
     paths:
       - 'iot-academic-project/backend/**'
+      - '.github/workflows/backend-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-test:
@@ -34,8 +44,18 @@ jobs:
         with:
           php-version: '8.4'
           extensions: pdo_pgsql, intl
+          tools: composer:v2
+          coverage: none
+      - name: Validate Composer
+        run: composer validate --strict --no-check-publish
+        working-directory: ./iot-academic-project/backend
       - name: Install Dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
+        working-directory: ./iot-academic-project/backend
+      - name: Lint Symfony Configuration
+        run: |
+          php bin/console lint:yaml config --parse-tags
+          php bin/console lint:container
         working-directory: ./iot-academic-project/backend
       - name: Run Static Analysis (PHPStan)
         if: ${{ hashFiles('iot-academic-project/backend/vendor/bin/phpstan') != '' }}
