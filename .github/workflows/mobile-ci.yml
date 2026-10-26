@@ -2,10 +2,10 @@ name: Mobile CI (Flutter)
 on:
   push:
     paths:
-      - 'mobile/**'
+      - 'iot-academic-project/mobile/**'
   pull_request:
     paths:
-      - 'mobile/**'
+      - 'iot-academic-project/mobile/**'
 
 jobs:
   build-and-test:
@@ -18,13 +18,13 @@ jobs:
           cache: true
       - name: Get Dependencies
         run: flutter pub get
-        working-directory: ./mobile
+        working-directory: ./iot-academic-project/mobile
       - name: Analyze Code
         run: flutter analyze
-        working-directory: ./mobile
+        working-directory: ./iot-academic-project/mobile
       - name: Run Tests
         run: flutter test
-        working-directory: ./mobile
+        working-directory: ./iot-academic-project/mobile
       - name: Build APK
         run: flutter build apk --debug
-        working-directory: ./mobile
+        working-directory: ./iot-academic-project/mobile

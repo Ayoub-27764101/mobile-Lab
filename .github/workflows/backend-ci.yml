@@ -2,10 +2,10 @@ name: Backend CI (Symfony 7.4 / PHP 8.4)
 on:
   push:
     paths:
-      - 'backend/**'
+      - 'iot-academic-project/backend/**'
   pull_request:
     paths:
-      - 'backend/**'
+      - 'iot-academic-project/backend/**'
 
 jobs:
   build-and-test:
@@ -36,12 +36,12 @@ jobs:
           extensions: pdo_pgsql, intl
       - name: Install Dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
-        working-directory: ./backend
+        working-directory: ./iot-academic-project/backend
       - name: Run Static Analysis (PHPStan)
-        if: ${{ hashFiles('backend/vendor/bin/phpstan') != '' }}
+        if: ${{ hashFiles('iot-academic-project/backend/vendor/bin/phpstan') != '' }}
         run: vendor/bin/phpstan analyse
-        working-directory: ./backend
+        working-directory: ./iot-academic-project/backend
       - name: Run Tests (PHPUnit)
-        if: ${{ hashFiles('backend/vendor/bin/phpunit') != '' }}
+        if: ${{ hashFiles('iot-academic-project/backend/vendor/bin/phpunit') != '' }}
         run: vendor/bin/phpunit
-        working-directory: ./backend
+        working-directory: ./iot-academic-project/backend

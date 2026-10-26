@@ -2,10 +2,10 @@ name: Firmware CI (ESP32)
 on:
   push:
     paths:
-      - 'firmware/**'
+      - 'iot-academic-project/firmware/**'
   pull_request:
     paths:
-      - 'firmware/**'
+      - 'iot-academic-project/firmware/**'
 
 jobs:
   compile:
@@ -20,4 +20,4 @@ jobs:
         run: pip install platformio
       - name: Compile ESP32 Firmware
         run: pio run
-        working-directory: ./firmware
+        working-directory: ./iot-academic-project/firmware
