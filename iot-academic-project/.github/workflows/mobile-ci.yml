@@ -1,0 +1,30 @@
+name: Mobile CI (Flutter)
+on:
+  push:
+    paths:
+      - 'mobile/**'
+  pull_request:
+    paths:
+      - 'mobile/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+      - name: Get Dependencies
+        run: flutter pub get
+        working-directory: ./mobile
+      - name: Analyze Code
+        run: flutter analyze
+        working-directory: ./mobile
+      - name: Run Tests
+        run: flutter test
+        working-directory: ./mobile
+      - name: Build APK
+        run: flutter build apk --debug
+        working-directory: ./mobile

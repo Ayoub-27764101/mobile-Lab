@@ -1,0 +1,23 @@
+name: Firmware CI (ESP32)
+on:
+  push:
+    paths:
+      - 'firmware/**'
+  pull_request:
+    paths:
+      - 'firmware/**'
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PlatformIO
+        run: pip install platformio
+      - name: Compile ESP32 Firmware
+        run: pio run
+        working-directory: ./firmware

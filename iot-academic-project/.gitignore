@@ -1,0 +1,22 @@
+# Environment variables (keep committed defaults, ignore local overrides)
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+db_data/
+
+# Build artifacts
+backend/var/
+backend/vendor/
+mobile/build/
+firmware/.pio/

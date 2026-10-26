@@ -1,0 +1,47 @@
+name: Backend CI (Symfony 7.4 / PHP 8.4)
+on:
+  push:
+    paths:
+      - 'backend/**'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: test
+      DATABASE_URL: "postgresql://symfony:symfony_password@127.0.0.1:5432/app_db?serverVersion=18&charset=utf8"
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: symfony
+          POSTGRES_PASSWORD: symfony_password
+          POSTGRES_DB: app_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP 8.4
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_pgsql, intl
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+        working-directory: ./backend
+      - name: Run Static Analysis (PHPStan)
+        if: ${{ hashFiles('backend/vendor/bin/phpstan') != '' }}
+        run: vendor/bin/phpstan analyse
+        working-directory: ./backend
+      - name: Run Tests (PHPUnit)
+        if: ${{ hashFiles('backend/vendor/bin/phpunit') != '' }}
+        run: vendor/bin/phpunit
+        working-directory: ./backend
