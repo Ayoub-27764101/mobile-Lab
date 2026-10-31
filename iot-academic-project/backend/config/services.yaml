@@ -13,7 +13,7 @@ services:
     app.event.Jwt_user_Listener:
         class: App\Event\Listener\JwtUserListener
         tags:
-            - { name: 'kernel.event_listener', event: 'lexik_jwt_authentication_on_authentication_suceess', method: 'onauthenticationsuceess' }
+            - { name: 'kernel.event_listener', event: 'lexik_jwt_authentication.on_authentication_success', method: 'onAuthenticationSuccess' }
 
     app.event.user_Listener:
         class: App\Event\Listener\UserListener
