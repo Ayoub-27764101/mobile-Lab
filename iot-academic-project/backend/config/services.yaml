@@ -16,6 +16,6 @@ services:
             - { name: 'kernel.event_listener', event: 'lexik_jwt_authentication_on_authentication_suceess', method: 'onauthenticationsuceess' }
 
     app.event.user_Listener:
-        class: App\Event\Listener\UserListener
+        class: App\Event\Listener\JwtUserListener
         tags:
             - { name: 'doctrine.event_listener', event: 'prePersist' }
