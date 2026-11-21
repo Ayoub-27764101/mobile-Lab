@@ -3,11 +3,11 @@
 namespace App\Event\Listener;
 
 use App\Entity\User;
-use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 
 class JwtUserListener
 {
-    public function onAuthenticationSuccess(AuthenticationSuccessEvent $event): void
+    public function onJwtCreated(JWTCreatedEvent $event): void
     {
         $user = $event->getUser();
 
@@ -16,10 +16,10 @@ class JwtUserListener
         }
 
         $payload = $event->getData();
-        $payload['id'] = $user->getId();
+        $payload['id']        = $user->getId();
         $payload['firstname'] = $user->getFirstname();
-        $payload['lastname'] = $user->getLastname();
-        $payload['email'] = $user->getEmail();
+        $payload['lastname']  = $user->getLastname();
+        $payload['email']     = $user->getEmail();
 
         $event->setData($payload);
     }
