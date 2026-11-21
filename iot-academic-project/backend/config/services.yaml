@@ -10,12 +10,10 @@ services:
     App\:
         resource: '../src/'
 
-    app.event.Jwt_user_Listener:
-        class: App\Event\Listener\JwtUserListener
+    App\Event\Listener\JwtUserListener:
         tags:
-            - { name: 'kernel.event_listener', event: 'lexik_jwt_authentication_on_authentication_suceess', method: 'onauthenticationsuceess' }
-
-    app.event.user_Listener:
-        class: App\Event\Listener\JwtUserListener
-        tags:
-            - { name: 'doctrine.event_listener', event: 'prePersist' }
+            - { name: 'kernel.event_listener', event: 'lexik_jwt_authentication.on_jwt_created', method: 'onJwtCreated' }
+   # app.event.user_Listener:
+       # class: App\Event\Listener\JwtUserListener
+        #tags:
+           # - { name: 'doctrine.event_listener', event: 'prePersist' }
